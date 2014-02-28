@@ -14,16 +14,6 @@ class QuotesController extends \BaseController {
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @return Response
@@ -75,18 +65,6 @@ class QuotesController extends \BaseController {
 			'error' => true,
 			'type' => '404',
 			));
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		
 	}
 
 	/**

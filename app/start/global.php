@@ -18,7 +18,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/models',
 	app_path().'/database/seeds',
 
-));
+	));
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +48,13 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 
 App::error(function(Exception $exception, $code)
 {
+	// will check the type of exception in here
+	// e.g. checking if it is an instance of http exception
+	if ($exception instanceof HttpExceptionInterface) {
+		$code = $exception->getStatusCode();
+		Log::($code);
+	}
+
 	Log::error($exception);
 });
 
