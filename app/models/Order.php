@@ -25,7 +25,7 @@ class Order extends Eloquent {
     
     public function getLocationAttribute() {
 //        return URL::to('products?' . 'upc=' . $this->upc);
-        return URL::to('orders/' . $this->id);
+        return URL::to('api/v1/orders/' . $this->id);
     }
 
 	// public function getImageAttribute($image)

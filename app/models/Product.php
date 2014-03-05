@@ -18,12 +18,12 @@ class Product extends Eloquent {
 	 * @var array
 	 */
 	protected $hidden = array('created_at','updated_at');
-
+	protected $appends = array('location');
 	
     
     public function getLocationAttribute() {
 //        return URL::to('products?' . 'upc=' . $this->upc);
-        return URL::to('products/' . $this->id);
+        return URL::to('api/v1/products/' . $this->id);
     }
 
 	// public function getImageAttribute($image)

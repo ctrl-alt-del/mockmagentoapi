@@ -18,13 +18,13 @@ class Quote extends Eloquent {
 	 * @var array
 	 */
 	protected $hidden = array('id','created_at','updated_at');
-	protected $appends = array('number_of_orders');
+	protected $appends = array('number_of_orders','location');
 
 
 
 	public function getLocationAttribute() {
 //        return URL::to('products?' . 'upc=' . $this->upc);
-		return URL::to('quotes/' . $this->id);
+		return URL::to('api/v1/quotes/' . $this->id);
 	}
 
 	// public function getImageAttribute($image)
