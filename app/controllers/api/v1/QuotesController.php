@@ -76,10 +76,6 @@ class QuotesController extends \BaseController {
 	public function update($id)
 	{
 		$quote = Quote::findOrFail($id);
-		// Quote::find($id)->update(array(
-		// 	// 'product_id' => Input::get('product_id'),
-		// 	'quantity' => Input::get('quantity'),
-		// 	));
 		$quote->quantity = Input::get('quantity');
 		$quote->save();
 

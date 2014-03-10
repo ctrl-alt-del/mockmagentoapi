@@ -63,17 +63,11 @@ class ProductsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
 		$product = Product::findOrFail($id);
-		// $product->update(array(
-		// 	'name' => Input::get('name'),
-		// 	));
-
 		$product->name = Input::get('name');
 		$product->save();
 		
 		return Response::json($product);
-		// return Response::json(Input::get('name'));
 	}
 
 	/**
