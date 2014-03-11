@@ -11,7 +11,6 @@ class UserTableSeeder extends Seeder {
         // Uncomment the below to wipe the table clean before populating
 		DB::table('users')->truncate();
 
-		//$names = array('jiyang','gaetan','ingo','paul','kevin','marc','walter','chris');
 		$names = $this->genNames(8);
 
 		$date = new DateTime;
@@ -19,9 +18,10 @@ class UserTableSeeder extends Seeder {
 
 		foreach ($names as $name) {
 			$user = array(
-				'email' => $name.'@gmail.com',
-				'created_at' => $date, 
-				'updated_at' => $date, 
+				'email' 		=> $name.'@gmail.com',
+				'password' 		=> Hash::make('000000'),
+				'created_at' 	=> $date, 
+				'updated_at' 	=> $date, 
 				);
 			array_push($users, $user);
 		}
