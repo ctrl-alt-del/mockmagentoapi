@@ -35,6 +35,21 @@ Route::group(
 	function() {
 
 		/**
+		* Route to return a mock session data
+		**/
+		Route::get('session', function() {
+			
+			$date = new DateTime();
+
+			return array(
+				'type'			=> $_SERVER['REQUEST_METHOD'],
+				'session_id' 	=> '71ll7anq2uj6nabseqd83uga33',
+				'quote_id'		=> '',
+				'date' 			=> $date->format('Y-m-d H:i:s'),
+				);
+		});
+
+		/**
 		* Routes to access the quote
 		**/
 		Route::get('quotes', array('uses' => 'QuotesController@index'));
