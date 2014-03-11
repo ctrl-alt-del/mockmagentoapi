@@ -55,6 +55,34 @@ Route::group(
 		});
 
 		/**
+		* Route to return a mock basic authentication data
+		**/
+		// Route::get('login', array('before' => 'basic.once', function() {
+			
+		// 	$date = new DateTime();
+
+		// 	return 'You pass the http basic authentication on '.$date->format('Y-m-d H:i:s');
+		// }));
+
+		/**
+		* Route to return a mock basic authentication data
+		**/
+		Route::get('login', function() {
+			$creds = array(
+				'email' => Input::get('email'),
+				'password'  => Input::get('password'),
+				);
+			$date = new DateTime();
+			
+			if (Auth::attempt($creds)) {
+				return 'You pass the http basic authentication on '.$date->format('Y-m-d H:i:s');
+			} else {
+				return 'Failed on '.$date->format('Y-m-d H:i:s');
+			}
+			
+		});
+
+		/**
 		* Routes to access the quote
 		**/
 		Route::resource('quotes', 'QuotesController');
