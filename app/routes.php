@@ -16,7 +16,6 @@ Route::get('/{path}', function($path)
 	return Redirect::to('api/v1/'.$path);
 });
 
-
 /**
 * Put all the routes into a group 'api/v1'
 *
@@ -37,8 +36,6 @@ Route::group(
 			return 'Welcome to API Version 01';
 		});
 
-
-
 		/**
 		* Route to return a mock session data
 		**/
@@ -57,27 +54,73 @@ Route::group(
 		/**
 		* Route to return a mock basic authentication data
 		**/
-		// Route::get('login', array('before' => 'basic.once', function() {
+		Route::get('login', function() {
 			
-		// 	$date = new DateTime();
+			$email = Input::get('email');
+			$password = Input::get('password');
+			
+			$creds = array(
+				'email' 	=> $email,
+				'password'  => $password,
+				);
 
-		// 	return 'You pass the http basic authentication on '.$date->format('Y-m-d H:i:s');
-		// }));
+			$date = new DateTime();
+			
+			if (Auth::attempt($creds)) {
+
+				return Response::json(array(
+					'email' 	=> $email,
+					'date' 		=> $date->format('Y-m-d H:i:s'),
+					'message' 	=> 'pass',
+					'type'		=> $_SERVER['REQUEST_METHOD'],
+					));
+				
+			} else {
+				
+				return Response::json(array(
+					'email' 	=> $email,
+					'date' 		=> $date->format('Y-m-d H:i:s'),
+					'message' 	=> 'fails',
+					'type'		=> $_SERVER['REQUEST_METHOD'],
+					));
+			}
+			
+		});
 
 		/**
 		* Route to return a mock basic authentication data
 		**/
-		Route::get('login', function() {
+		Route::post('login', function() {
+
+			$email = Input::get('email');
+			$password = Input::get('password');		
+
 			$creds = array(
-				'email' => Input::get('email'),
-				'password'  => Input::get('password'),
+				'email' 	=> $email,
+				'password'  => $password,
 				);
+
+			// return Input::all();
+
 			$date = new DateTime();
 			
 			if (Auth::attempt($creds)) {
-				return 'You pass the http basic authentication on '.$date->format('Y-m-d H:i:s');
+
+				return Response::json(array(
+					'email' 	=> $email,
+					'date' 		=> $date->format('Y-m-d H:i:s'),
+					'message' 	=> 'pass',
+					'type'		=> $_SERVER['REQUEST_METHOD'],
+					));
+				
 			} else {
-				return 'Failed on '.$date->format('Y-m-d H:i:s');
+				
+				return Response::json(array(
+					'email' 	=> $email,
+					'date' 		=> $date->format('Y-m-d H:i:s'),
+					'message' 	=> 'fails',
+					'type'		=> $_SERVER['REQUEST_METHOD'],
+					));
 			}
 			
 		});
