@@ -7,13 +7,12 @@ class QuotesTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function testIndex()
-	{
+	public function testIndex() {
 		// $crawler = $this->client->request('GET', '/');
 		// $this->assertTrue($this->client->getResponse()->isOk());
 		$response = $this->call('GET', 'quotes');
 		$this->assertRedirectedTo('api/v1/quotes');
-		$this->assertResponseStatus(200);
+		$this->assertResponseStatus(302);
 	}
 
 }
