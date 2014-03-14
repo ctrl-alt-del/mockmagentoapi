@@ -10,7 +10,8 @@ class ProductsController extends \BaseController {
 	public function index()
 	{
 		//
-		return Response::json(Product::all());
+		$products = Product::all();
+		return Response::json($products);
 	}
 
 	/**
@@ -43,16 +44,8 @@ class ProductsController extends \BaseController {
 	 */
 	public function showIdWithSku($sku)
 	{
-		$product = Product::where('sku', '=', $sku)->first();
-
-		if ($product != null) {
-			return Response::json($product);
-		}
-
-		return Response::json(array(
-			'error' => true,
-			'type' => '404',
-			));
+		$product = Product::where('sku', '=', $sku)->firstOrFail();
+		return Response::json($product);
 	}
 
 	/**

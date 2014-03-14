@@ -1,3 +1,4 @@
+
 <?php
 
 class OrdersController extends \BaseController {
@@ -19,8 +20,7 @@ class OrdersController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
+	public function store() {
 
 		$order = Order::where('quote_id','=',Input::get('quote_id'))
 		->where('product_id','=',Input::get('product_id'))
@@ -53,18 +53,9 @@ class OrdersController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
-	{
-		//
+	public function show($id) {
 		$order = Order::find($id);
-		if ($order != null) {
-			return Response::json($order);
-		}
-
-		return Response::json(array(
-			'error' => true,
-			'type' => '404',
-			));
+		return Response::json($order);
 	}
 
 	/**
@@ -73,19 +64,14 @@ class OrdersController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update()
-	{
+	public function update() {
 		$order = Order::where('quote_id','=', Input::get('quote_id'))
 		->where('product_id','=', Input::get('product_id'))
-		->first();
+		->firstOrFail();
 
-		if ($order != null) {
-			$order->quantity = Input::get('quantity');
-			$order->save();
-			return Response::json($order);
-		} else {
-			return Response::json('NO Order');
-		}
+		$order->quantity = Input::get('quantity');
+		$order->save();
+		return Response::json($order);
 	}
 
 	/**
@@ -96,21 +82,12 @@ class OrdersController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$order = Order::find($id);
-
-		if ($order == null) {
-			return Response::json(array(
-				'error' 	=> false,
-				'type' 		=> '200',
-				'message' 	=> 'no product',
-				));
-		}
-		
+		$order = Order::findOrFail($id);
 		$order->delete();
 
 		return Response::json(array(
 			'error' 	=> false,
-			'type' 		=> '201',
+			'type' 		=> '200',
 			'message' 	=> 'product has deleted',
 			));
 	}
@@ -125,9 +102,8 @@ class OrdersController extends \BaseController {
 	{
 		$order = Order::where('quote_id','=',Input::get('quote_id'))
 		->where('product_id','=',Input::get('product_id'))
-		->first();
+		->firstOrFail();
 
 		$this->destroy($order->id);
 	}
-
 }

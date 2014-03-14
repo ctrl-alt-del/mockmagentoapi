@@ -31,18 +31,8 @@ class QuotesController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
-		$quote = Quote::find($id);
-
-
-		if ($quote != null) {
-			return Response::json($quote);
-		}
-
-		return Response::json(array(
-			'error' => true,
-			'type' => '404',
-			));
+		$quote = Quote::findOrFail($id);
+		return Response::json($quote);
 	}
 
 	/**
@@ -53,18 +43,8 @@ class QuotesController extends \BaseController {
 	 */
 	public function showOrders($id)
 	{
-		
-		$quote = Quote::find($id);
-		$orders = $quote->orders;
-
-		if ($orders != null) {
-			return Response::json($orders);
-		}
-
-		return Response::json(array(
-			'error' => true,
-			'type' => '404',
-			));
+		$quote = Quote::findOrFail($id);
+		return Response::json($quote->orders);
 	}
 
 	/**
@@ -80,7 +60,6 @@ class QuotesController extends \BaseController {
 		$quote->save();
 
 		return Response::json($quote);
-		// return Response::json(Input::get('quantity'));
 	}
 
 	/**
@@ -93,5 +72,4 @@ class QuotesController extends \BaseController {
 	{
 		//
 	}
-
 }
