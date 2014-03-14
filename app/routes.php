@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('/{path}', function($path)
-{
-	return Redirect::to('api/v1/'.$path);
-});
-
 /**
 * Put all the routes into a group 'api/v1'
 *
@@ -153,3 +148,15 @@ Route::group(
 		// Route::get('orders/{id}', array('uses' => 'OrdersController@show'));
 		// Route::put('orders/update', array('uses' => 'OrdersController@update'));
 	});
+
+/**
+* Redirect all the routes to 'api/v1'
+*
+* @since 2014-03-05
+* @version 1.0
+**/
+Route::any('{all}', function($path) {
+	if (!preg_match("/\bapi\/v1\b/i", $path)) {
+		return Redirect::to('api/v1/'.$path);
+	}
+})->where('all', '.*');
