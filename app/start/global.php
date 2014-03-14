@@ -1,5 +1,6 @@
 <?php
 
+use \Illuminate\Database\Eloquent\ModelNotFoundException;
 /*
 |--------------------------------------------------------------------------
 | Register The Laravel Class Loader
@@ -45,17 +46,18 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 | shown, which includes a detailed stack trace during debug.
 |
 */
-
 App::error(function(Exception $exception, $code)
 {
-	// will check the type of exception in here
-	// e.g. checking if it is an instance of http exception
-	// if ($exception instanceof HttpExceptionInterface) {
-	// 	$code = $exception->getStatusCode();
-	// 	Log::($code);
-	// }
-
 	Log::error($exception);
+});
+
+App::error(function(ModelNotFoundException $exception, $code) {
+	return Response::json(array(
+		'error' 	=> true,
+		'code' 		=> $code,
+		'type' 		=> 'ModelNotFoundException',
+		'message' 	=> $exception->getMessage(),
+		));
 });
 
 /*
@@ -86,3 +88,9 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+
+App::missing(function()
+{
+	return '404 error.';
+});
