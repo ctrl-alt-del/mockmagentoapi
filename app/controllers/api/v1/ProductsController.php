@@ -21,7 +21,28 @@ class ProductsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$data = array(
+			'name' => Input::get('name'),
+			'price' => Input::get('price'),
+			'sku' => Input::get('sku'),
+			);
+
+		$rules = array('sku' => 'unique:products,sku');
+
+		$validator = Validator::make($data, $rules);
+
+		if ($validator->fails()) {
+			echo 'Oops, product is already on database.';
+		} else {
+			
+			$product = new Product;
+			$product->name = Input::get('name');
+			$product->price = Input::get('price');
+			$product->sku = Input::get('sku');
+			$product->save();
+
+			echo 'Product is registered, thank you!';
+		}
 	}
 
 	/**
