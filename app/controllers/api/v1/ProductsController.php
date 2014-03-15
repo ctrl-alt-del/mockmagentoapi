@@ -32,18 +32,28 @@ class ProductsController extends \BaseController {
 		$validator = Validator::make($data, $rules);
 
 		if ($validator->fails()) {
-			echo 'Oops, product is already on database.';
-		} else {
-			
-			$product = new Product;
-			$product->name = Input::get('name');
-			$product->price = Input::get('price');
-			$product->sku = Input::get('sku');
-			$product->save();
+			return Response::json(
+				array(
+					'code' 		=> '400',
+					'message' 	=> 'Oops, product is already on database.',
+					'data' 		=> '',
+					);
+			} else {
 
-			echo 'Product is registered, thank you!';
-		}
-	}
+				$product = new Product;
+				$product->name = Input::get('name');
+				$product->price = Input::get('price');
+				$product->sku = Input::get('sku');
+				$product->save();
+
+				return Response::json(
+					array(
+						'code' 		=> '200',
+						'message' 	=> 'Product is registered, thank you!',
+						'data' 		=> '',
+						);
+				}
+			}
 
 	/**
 	 * Display the specified resource.

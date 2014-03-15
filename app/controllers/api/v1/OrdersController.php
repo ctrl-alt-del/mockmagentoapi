@@ -27,11 +27,13 @@ class OrdersController extends \BaseController {
 		->first();
 
 		if ($order != null) {
-			return Response::json(array(
-				'error' 	=> false,
-				'type' 		=> '200',
-				'message' 	=> 'product has been added, no action is taken...',
-				));
+			return Response::json(
+				array(
+					'code' 		=> '400',
+					'message' 	=> 'Order is already in database',
+					'data' 		=> '',
+					);
+			}
 		}
 
 		$order = new Order;
@@ -40,11 +42,13 @@ class OrdersController extends \BaseController {
 		$order->quantity 	= Input::get('quantity');
 		$order->save();
 
-		return Response::json(array(
-			'error' 	=> false,
-			'type' 		=> '201',
-			'message' 	=> 'new product has created',
-			));
+		return Response::json(
+			array(
+				'code' 		=> '200',
+				'message' 	=> 'Order is created!',
+				'data' 		=> '',
+				);
+		}
 	}
 
 	/**
