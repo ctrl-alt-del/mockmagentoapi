@@ -157,6 +157,6 @@ Route::group(
 **/
 Route::any('{all}', function($path) {
 	if (!preg_match("/\bapi\/v1\b/i", $path)) {
-		return Redirect::to('api/v1/'.$path);
+		return Redirect::intended('api/v1/'.$path);
 	}
 })->where('all', '.*');
