@@ -37,7 +37,7 @@ class ProductsController extends \BaseController {
 					'code' 		=> '400',
 					'message' 	=> 'Oops, product is already on database.',
 					'data' 		=> '',
-					);
+					));
 			} else {
 
 				$product = new Product;
@@ -51,9 +51,9 @@ class ProductsController extends \BaseController {
 						'code' 		=> '200',
 						'message' 	=> 'Product is registered, thank you!',
 						'data' 		=> '',
-						);
-				}
+						));
 			}
+		}
 
 	/**
 	 * Display the specified resource.
@@ -61,8 +61,7 @@ class ProductsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
-	{
+	public function show($id) {
 		//
 		return Response::json(Product::findOrFail($id));
 	}

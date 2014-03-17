@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
-
 class Order extends Eloquent {
 
 	/**
@@ -11,7 +8,6 @@ class Order extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'orders';
-	protected $appends = array('location');
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -19,26 +15,24 @@ class Order extends Eloquent {
 	 * @var array
 	 */
 	protected $hidden = array('created_at','updated_at');
+	protected $appends = array('location');
 
-	 
-
-    
-    public function getLocationAttribute() {
+	public function getLocationAttribute() {
 //        return URL::to('products?' . 'upc=' . $this->upc);
-        return URL::to('api/v1/orders/' . $this->id);
-    }
+		return URL::to('api/v1/orders/' . $this->id);
+	}
 
 	// public function getImageAttribute($image)
 	// {
 	// 	return URL::to('images/'.$image);
 	// }
 
-    // public function product() {
-    //     return $this->belongsTo('Product');
-    // }
+    public function product() {
+        return $this->belongsTo('Product');
+    }
 
-    //  public function quote() {
-    //     return $this->belongsTo('Quote');
-    // }
+     public function quote() {
+        return $this->belongsTo('Quote');
+    }
 
 }

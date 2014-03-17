@@ -8,11 +8,25 @@ class OrdersController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
-		//
-		$orders = Order::all();
-		return Response::json($orders);
+	public function index() {
+
+		$hashset = array();
+		$attempts = DB::table('orders')->count();
+
+		while (count($hashset) < 5) {
+			$hashset[rand(10, $attempts)] = true;
+		}
+
+		$x = array();
+		
+		foreach ($hashset as $id => $value) {
+			$order = Order::find($id);
+			if ($order != null) {
+				$x[] = $order->toArray();
+			}
+		}
+
+		return Response::json($x);
 	}
 
 	/**
@@ -32,8 +46,7 @@ class OrdersController extends \BaseController {
 					'code' 		=> '400',
 					'message' 	=> 'Order is already in database',
 					'data' 		=> '',
-					);
-			}
+					));
 		}
 
 		$order = new Order;
@@ -47,8 +60,7 @@ class OrdersController extends \BaseController {
 				'code' 		=> '200',
 				'message' 	=> 'Order is created!',
 				'data' 		=> '',
-				);
-		}
+				));
 	}
 
 	/**
