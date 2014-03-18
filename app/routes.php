@@ -124,29 +124,19 @@ Route::group(
 		* Routes to access the quote
 		**/
 		Route::resource('quotes', 'QuotesController');
-		// Route::get('quotes', array('uses' => 'QuotesController@index'));
-		// Route::get('quotes/{id}', array('uses' => 'QuotesController@show'));
 		Route::get('quotes/{id}/orders', array('uses' => 'QuotesController@showOrders'));
-		// Route::put('quotes/{id}', array('uses' => 'QuotesController@update'));
 
 		/**
 		* Routes to access the qproducts
 		**/
 		Route::resource('products', 'ProductsController');
-		// Route::get('products', array('uses' => 'ProductsController@index'));
-		// Route::get('products/{id}', array('uses' => 'ProductsController@show'));
 		Route::get('products/sku/{sku}', array('uses' => 'ProductsController@showIdWithSku'));
-		// Route::put('products/{id}', array('uses' => 'ProductsController@update'));
 
 		/**
 		* Routes to access the orders
 		**/
 		Route::resource('orders', 'OrdersController');
-		// Route::get('orders', array('uses' => 'OrdersController@index'));
-		// Route::post('orders', array('uses' => 'OrdersController@store'));
 		Route::delete('orders', array('uses' => 'OrdersController@destroyWithQuoteAndProductIds'));
-		// Route::get('orders/{id}', array('uses' => 'OrdersController@show'));
-		// Route::put('orders/update', array('uses' => 'OrdersController@update'));
 	});
 
 /**

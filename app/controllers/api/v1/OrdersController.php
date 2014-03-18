@@ -1,7 +1,7 @@
 
 <?php
 
-class OrdersController extends \BaseController {
+class OrdersController extends \MaemController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,12 +10,7 @@ class OrdersController extends \BaseController {
 	 */
 	public function index() {
 
-		$hashset = array();
-		$attempts = DB::table('orders')->count();
-
-		while (count($hashset) < 5) {
-			$hashset[rand(10, $attempts)] = true;
-		}
+		$hashset = $this-> pickRandomIds('orders', 5);
 
 		$x = array();
 		
@@ -23,10 +18,28 @@ class OrdersController extends \BaseController {
 			$order = Order::find($id);
 			if ($order != null) {
 				$x[] = $order->toArray();
+			} else {
+				$x[] = $this->findRemainItem('orders', $hashset);
 			}
 		}
 
 		return Response::json($x);
+	}
+
+	private function findRemainItem($table, $hashset) {
+
+		$totalRow = DB::table($table)->count();
+
+		do {
+			$id = rand(1, $totalRow);
+		} while (array_key_exists($id, $hashset));
+
+		$order = Order::find($id);
+		if ($order != null) {
+			return $order->toArray();
+		} else {
+			return findRemainItem($table, $hashset);
+		}
 	}
 
 	/**
