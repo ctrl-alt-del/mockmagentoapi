@@ -12,33 +12,29 @@ class OrdersController extends \MaemController {
 
 		$hashset = $this-> pickRandomIds('orders', 5);
 
-		$x = array();
+		$output = array();
 		
 		foreach ($hashset as $id => $value) {
 			$order = Order::find($id);
 			if ($order != null) {
-				$x[] = $order->toArray();
+				$output[] = $order->toArray();
 			} else {
-				$x[] = $this->findRemainItem('orders', $hashset);
+				$output[] = $this->findRemainItem('orders', $hashset);
 			}
 		}
 
-		return Response::json($x);
+		return Response::json($output);
 	}
 
 	private function findRemainItem($table, $hashset) {
 
-		$totalRow = DB::table($table)->count();
-
-		do {
-			$id = rand(1, $totalRow);
-		} while (array_key_exists($id, $hashset));
+		$id = $this->pickAdditionalRandomIdForSet($table, $hashset);
 
 		$order = Order::find($id);
 		if ($order != null) {
 			return $order->toArray();
 		} else {
-			return findRemainItem($table, $hashset);
+			return $this->findRemainItem($table, $hashset);
 		}
 	}
 
