@@ -1,17 +1,40 @@
 <?php
 
-class ProductsController extends \BaseController {
+class ProductsController extends \MaemController {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
-		//
-		$products = Product::all();
-		return Response::json($products);
+	public function index() {
+
+		$hashset = $this-> pickRandomIds('products', 5);
+
+		$output = array();
+		
+		foreach ($hashset as $id => $value) {
+			$order = Product::find($id);
+			if ($order != null) {
+				$output[] = $order->toArray();
+			} else {
+				$output[] = $this->findRemainItem('products', $hashset);
+			}
+		}
+
+		return Response::json($output);
+	}
+
+	private function findRemainItem($table, $hashset) {
+
+		$id = $this->pickAdditionalRandomIdForSet($table, $hashset);
+
+		$order = Product::find($id);
+		if ($order != null) {
+			return $order->toArray();
+		} else {
+			return $this->findRemainItem($table, $hashset);
+		}
 	}
 
 	/**
