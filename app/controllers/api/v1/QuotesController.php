@@ -1,16 +1,40 @@
 <?php
 
-class QuotesController extends \BaseController {
+class QuotesController extends \MaemController {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
-		//
-		return Response::json(Quote::all());
+	public function index() {
+
+		$hashset = $this-> pickRandomIds('quotes', 5);
+
+		$output = array();
+		
+		foreach ($hashset as $id => $value) {
+			$order = Quote::find($id);
+			if ($order != null) {
+				$output[] = $order->toArray();
+			} else {
+				$output[] = $this->findRemainItem('quotes', $hashset);
+			}
+		}
+
+		return Response::json($output);
+	}
+
+	private function findRemainItem($table, $hashset) {
+
+		$id = $this->pickAdditionalRandomIdForSet($table, $hashset);
+
+		$order = Quote::find($id);
+		if ($order != null) {
+			return $order->toArray();
+		} else {
+			return $this->findRemainItem($table, $hashset);
+		}
 	}
 
 	/**
