@@ -3,9 +3,11 @@
 class MaemController extends BaseController {
 
 	/**
-	 * Setup the layout used by the controller.
+	 * Pick a given amount of ids randomly from a given table.
 	 *
-	 * @return hashset constains ids
+	 * @param $table the name of the table
+	 * @param $amount the number of ids
+	 * @return $hashset an array that constains randomly selected ids
 	 */
 	protected function pickRandomIds($table, $amount)
 	{
@@ -28,7 +30,8 @@ class MaemController extends BaseController {
 	/**
 	 * Pick a random id of given table.
 	 *
-	 * @return id
+	 * @param $table the name of the table
+	 * @return $id
 	 */
 	protected function pickRandomId($table) {
 
@@ -46,6 +49,8 @@ class MaemController extends BaseController {
 	 * Pick a random id of given table and make sure it is not
 	 * existed in the given hashset
 	 *
+	 * @param $table the name of the table
+	 * @param $hashset an array that constains randomly selected ids
 	 * @return id
 	 */
 	protected function pickAdditionalRandomIdForSet($table, $hashset) {
@@ -59,6 +64,4 @@ class MaemController extends BaseController {
 
 		return $id;
 	}
-
-
 }

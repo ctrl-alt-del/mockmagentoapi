@@ -127,8 +127,16 @@ class OrdersController extends \MaemController {
 	{
 		$order = Order::where('quote_id','=',Input::get('quote_id'))
 		->where('product_id','=',Input::get('product_id'))
-		->firstOrFail();
+		->first();
 
-		$this->destroy($order->id);
+		if (is_null($order)) {
+			return Response::json(array(
+				'error' 	=> false,
+				'type' 		=> '400',
+				'message' 	=> 'product is not existed',
+				));
+		}
+
+		return $this->destroy($order->id);
 	}
 }
