@@ -1,6 +1,19 @@
 <?php
 
-class MaemController extends BaseController {
+class MaemController extends Controller {
+
+	/**
+	 * Setup the layout used by the controller.
+	 *
+	 * @return void
+	 */
+	protected function setupLayout()
+	{
+		if ( ! is_null($this->layout))
+		{
+			$this->layout = View::make($this->layout);
+		}
+	}
 
 	/**
 	 * Pick a given amount of ids randomly from a given table.
